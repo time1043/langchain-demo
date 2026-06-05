@@ -1,10 +1,21 @@
+import { createDeepAgent } from 'deepagents';
 import { createAgent } from 'langchain';
 
 import { chatMimo } from './chat-model';
-import { getWeather } from './tool';
+import { checkpointer } from './memory';
+import { SYSTEM_PROMPT } from './prompt';
+import { fetchTextFromUrl } from './tool';
 
-// https://reference.langchain.com/javascript/langchain/index/createAgent
-export const agentDeepseek = createAgent({
+export const agent = createAgent({
   model: chatMimo,
-  tools: [getWeather],
+  tools: [fetchTextFromUrl],
+  systemPrompt: SYSTEM_PROMPT,
+  checkpointer,
+});
+
+export const deepAgent = createDeepAgent({
+  model: chatMimo,
+  tools: [fetchTextFromUrl],
+  systemPrompt: SYSTEM_PROMPT,
+  checkpointer,
 });
