@@ -1,24 +1,13 @@
 import { initChatModel } from 'langchain';
 
-// import { ChatOpenAI } from '@langchain/openai';  // Chat Model `/v1/chat/completions`
-// import { OpenAI } from '@langchain/openai';  // Text Completion `/v1/completions`
+// // deepseek-chat = deepseek-v4-flash non-thinking mode (deprecated 2026/07/24)
+// export const chatDeepSeek = await initChatModel('deepseek:deepseek-chat', {});
 
-// OpenAI has two API specifications
-// 1. Chat Completions API `/v1/chat/completions`
-// 2. Responses API `/v1/responses`
-
-// export const chatMimo = new ChatOpenAI({
-//   model: 'mimo-v2.5-pro',
-//   apiKey: process.env.MIMO_API_KEY,
-//   configuration: {
-//     baseURL: process.env.MIMO_OPENAI_API_URL,
-//   },
-//   // useResponsesApi: true,
-// });
-
-export const chatMimo = await initChatModel('openai:mimo-v2.5-pro', {
-  apiKey: process.env.MIMO_API_KEY,
-  configuration: {
-    baseURL: process.env.MIMO_OPENAI_API_URL,
-  },
+// deepseek-v4-flash with thinking disabled (non-thinking mode)
+export const chatDeepSeek = await initChatModel('deepseek:deepseek-v4-flash', {
+  modelKwargs: { thinking: { type: 'disabled' } },
 });
+
+// // deepseek-v4-flash with thinking enabled by default
+// // Error: Thinking mode does not support this tool_choice ❌
+// export const chatDeepSeek = await initChatModel('deepseek:deepseek-v4-flash', {});
